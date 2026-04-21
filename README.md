@@ -40,8 +40,8 @@ A portable, self-healing PowerShell automation suite for high-fidelity media acq
 1. **Download Mr. Roboto**
    ```powershell
    # Clone or download this repository
-   git clone https://github.com/kwisdomk/Ms.Roboto-v2.0.git
-   cd Ms.Roboto-v2.0
+   git clone https://github.com/kwisdomk/msr.git
+   cd msr
    ```
 
 2. **Run Mr. Roboto**
@@ -307,9 +307,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/kwisdomk/Ms.Roboto-v2.0/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/kwisdomk/Ms.Roboto-v2.0/discussions)
-- **Documentation**: [Wiki](https://github.com/kwisdomk/Ms.Roboto-v2.0/wiki)
+- **Issues**: [GitHub Issues](https://github.com/kwisdomk/msr/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/kwisdomk/msr/discussions)
+- **Documentation**: [Wiki](https://github.com/kwisdomk/msr/wiki)
 
 ---
 

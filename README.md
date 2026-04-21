@@ -40,8 +40,8 @@ A portable, self-healing PowerShell automation suite for high-fidelity media acq
 1. **Download Mr. Roboto**
    ```powershell
    # Clone or download this repository
-   git clone https://github.com/yourusername/mr-roboto.git
-   cd mr-roboto
+   git clone https://github.com/kwisdomk/Ms.Roboto-v2.0.git
+   cd Ms.Roboto-v2.0
    ```
 
 2. **Run Mr. Roboto**
@@ -71,24 +71,39 @@ You'll see:
 
 ```
 ╔═══════════════════════════════════════════════════════╗
-║              Mr. Roboto v2.0                          ║
-║        Autonomous Media Acquisition Agent             ║
+║          M R .  R O B O T O  v2.0                     ║
+║      Autonomous Media Acquisition Agent               ║
 ╚═══════════════════════════════════════════════════════╝
 
-System Information:
-  GPU: NVIDIA GeForce RTX 3050 (NVENC)
-  FFmpeg: 7.0.2
-  yt-dlp: 2026.01.28
-  Mode: Interactive
-  Architecture: x64
+  System Information
+  ─────────────────────────────────────────────────────
+  GPU      : NVIDIA GeForce RTX 3050
+  Encoder  : h264_nvenc
+  Arch     : x64
+  yt-dlp   : 2026.01.28
+  FFmpeg   : 7.0.2
+  Mode     : Interactive
 
-Select Quality Profile:
-  [1] Ultra  - 4K MKV (best quality)
-  [2] High   - 1080p MP4 (recommended)
-  [3] Mobile - 720p MP4 (smaller size)
-  [Q] Quit
+  ──────────────────────────────────────────────────────
+  Ready to acquire media.
 
-Choice:
+  ┌─────────────────────────────────────────────────────────┐
+  │  Mr. Roboto — Acquisition Mode                          │
+  ├─────────────────────────────────────────────────────────┤
+  │  VIDEO                                                  │
+  │  [1] Ultra   4K MKV     (maximum quality)               │
+  │  [2] High    1080p MP4  (recommended)                   │
+  │  [3] Mobile  720p MP4   (compact, portable)             │
+  ├─────────────────────────────────────────────────────────┤
+  │  AUDIO ONLY                                             │
+  │  [4] FLAC    Lossless archive  (archival grade)         │
+  │  [5] Opus    Hi-Fi native      (bit-perfect, smallest)  │
+  │  [6] MP3     320 kbps          (universal compat)       │
+  ├─────────────────────────────────────────────────────────┤
+  │  [Q] Quit                                               │
+  └─────────────────────────────────────────────────────────┘
+
+  Choice:
 ```
 
 ### Quality Profiles
@@ -292,9 +307,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/mr-roboto/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/mr-roboto/discussions)
-- **Documentation**: [Wiki](https://github.com/yourusername/mr-roboto/wiki)
+- **Issues**: [GitHub Issues](https://github.com/kwisdomk/Ms.Roboto-v2.0/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/kwisdomk/Ms.Roboto-v2.0/discussions)
+- **Documentation**: [Wiki](https://github.com/kwisdomk/Ms.Roboto-v2.0/wiki)
 
 ---
 

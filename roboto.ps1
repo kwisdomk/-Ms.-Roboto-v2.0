@@ -592,6 +592,58 @@ function Start-MediaAcquisition {
 #endregion
 
 # ══════════════════════════════════════════════════════════════════════════════
+#region  DOWNLOAD LOCATION
+# ══════════════════════════════════════════════════════════════════════════════
+
+function Select-DownloadLocation {
+    <#
+    Determines where downloaded files will land.
+    Audio profiles → OS Music folder; video profiles → OS Videos folder.
+    User can override with a custom path at the prompt.
+    Sets $script:DownloadDir which Start-MediaAcquisition reads.
+    #>
+    param([Parameter(Mandatory)][string]$QualityProfile)
+
+    $isAudio = $QualityProfile -like 'audio-*'
+
+    if ($isAudio) {
+        $nativeDir = [Environment]::GetFolderPath('MyMusic')
+        $label     = 'Music'
+    } else {
+        $nativeDir = [Environment]::GetFolderPath('MyVideos')
+        $label     = 'Videos'
+    }
+
+    # Fallback to local /downloads if the OS shell folder is unavailable
+    if ([string]::IsNullOrWhiteSpace($nativeDir)) {
+        $nativeDir = Join-Path $script:ScriptRoot 'downloads'
+    }
+
+    Write-Host ''
+    Write-Host ("  Default save location ({0}): {1}" -f $label, $nativeDir) -ForegroundColor DarkGray
+    Write-Host '  Press Enter to accept, or type a custom path:' -ForegroundColor DarkGray
+    $custom = (Read-Host '  Path').Trim()
+
+    if (-not [string]::IsNullOrWhiteSpace($custom)) { $nativeDir = $custom }
+
+    # Create the directory if it doesn't already exist
+    if (-not (Test-Path $nativeDir)) {
+        try {
+            New-Item -ItemType Directory -Path $nativeDir -Force | Out-Null
+            Write-Log 'INFO' "Created download directory: $nativeDir"
+        } catch {
+            Write-Log 'WARN' "Could not create '$nativeDir' — falling back to local downloads folder."
+            $nativeDir = Join-Path $script:ScriptRoot 'downloads'
+        }
+    }
+
+    $script:DownloadDir = $nativeDir
+    Write-Log 'INFO' "Download location set: $script:DownloadDir"
+}
+
+#endregion
+
+# ══════════════════════════════════════════════════════════════════════════════
 #region  INTERACTIVE MODE
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -694,6 +746,7 @@ function Main {
                 Write-Log "ERROR" "Invalid URL supplied via -Url parameter."
                 exit 1
             }
+            Select-DownloadLocation -QualityProfile $Profile
             Start-MediaAcquisition -TargetUrl $Url -QualityProfile $Profile
         } else {
             Start-InteractiveMode

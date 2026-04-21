@@ -425,7 +425,7 @@ function Show-Banner {
     $ffVer   = if ($ffmpegPath) { Get-BinaryVersion $ffmpegPath 'ffmpeg' } else { 'not installed' }
 
     # Bug #10 fixed: actual version strings shown
-    $c = 'Cyan'; $w = 'White'; $g = 'Green'; $y = 'Yellow'
+    $c = 'Cyan'; $w = 'White'; $y = 'Yellow'
     Write-Host ""
     Write-Host "  ╔═══════════════════════════════════════════════════════╗" -ForegroundColor $c
     Write-Host "  ║          M R .  R O B O T O  v$($script:Version)               ║" -ForegroundColor $c
@@ -540,7 +540,7 @@ function Start-MediaAcquisition {
     $isAudioOnly = $prof.PSObject.Properties.Name -contains 'audioOnly' -and $prof.audioOnly
 
     # Build yt-dlp argument list
-    $args = [System.Collections.Generic.List[string]]@(
+    $ytArgs = [System.Collections.Generic.List[string]]@(
         $TargetUrl,
         '--format',          $prof.format,
         '--ffmpeg-location', $ffmpegDir,
@@ -551,19 +551,19 @@ function Start-MediaAcquisition {
 
     if ($isAudioOnly) {
         # Audio-only path: extract + convert, no video muxing
-        $args.Add('--extract-audio')
-        $args.Add('--audio-format');  $args.Add($prof.audioFormat)
-        $args.Add('--audio-quality'); $args.Add($prof.audioQuality)
-        $args.Add('--output'); $args.Add("$downloadDir/%(title)s.%(ext)s")
+        $ytArgs.Add('--extract-audio')
+        $ytArgs.Add('--audio-format');  $ytArgs.Add($prof.audioFormat)
+        $ytArgs.Add('--audio-quality'); $ytArgs.Add($prof.audioQuality)
+        $ytArgs.Add('--output'); $ytArgs.Add("$downloadDir/%(title)s.%(ext)s")
         Write-Log "INFO" "Audio-only mode: $($prof.audioFormat.ToUpper()) @ $($prof.audioQuality)"
     } else {
         # Video path: merge streams into chosen container
-        $args.Add('--output');              $args.Add("$downloadDir/%(title)s.%(ext)s")
-        $args.Add('--merge-output-format'); $args.Add($prof.container)
+        $ytArgs.Add('--output');              $ytArgs.Add("$downloadDir/%(title)s.%(ext)s")
+        $ytArgs.Add('--merge-output-format'); $ytArgs.Add($prof.container)
         # Hardware acceleration (skip for software fallback)
         if ($script:Hardware.Encoder -ne 'libx264') {
-            $args.Add('--postprocessor-args')
-            $args.Add("ffmpeg:-c:v $($script:Hardware.Encoder)")
+            $ytArgs.Add('--postprocessor-args')
+            $ytArgs.Add("ffmpeg:-c:v $($script:Hardware.Encoder)")
             Write-Log "INFO" "Using HW encoder: $($script:Hardware.Encoder)"
         }
     }
@@ -575,7 +575,7 @@ function Start-MediaAcquisition {
     Write-Host ''
 
     try {
-        & $ytdlpPath @args
+        & $ytdlpPath @ytArgs
         if ($LASTEXITCODE -ne 0) { throw "yt-dlp exited with code $LASTEXITCODE" }
         Write-Log "INFO" "Download completed successfully."
         Write-Host ""
